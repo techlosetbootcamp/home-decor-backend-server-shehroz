@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Decor API</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 50px;
+        background-color: #f9f9f9;
+      }
+      h1 {
+        color: #4caf50;
+        font-size: 40px;
+        margin-bottom: 20px;
+      }
+      p {
+        font-size: 18px;
+        color: #555;
+        margin-bottom: 30px;
+      }
+      a.button {
+        text-decoration: none;
+        color: white;
+        background-color: #4caf50;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 18px;
+        transition: background-color 0.3s, transform 0.3s;
+      }
+      a.button:hover {
+        background-color: #45a049;
+        transform: scale(1.05);
+      }
+      .project-link,
+      .contact-link,
+      .tech-link {
+        color: #4caf50;
+        font-weight: bold;
+        font-size: 18px;
+        transition: color 0.3s;
+      }
+      .project-link:hover,
+      .contact-link:hover,
+      .tech-link:hover {
+        color: #388e3c;
+        text-decoration: underline;
+      }
+      footer {
+        font-size: 14px;
+        color: #aaa;
+        margin-top: 40px;
+      }
+      .h3 {
+        display: inline-flex;
+        margin-right: 10px;
+      }
+      .tech-stack {
+        font-size: medium;
+      }
+      .footer-link-container {
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+      }
+      .footer-link {
+        color: #555;
+        font-size: 14px;
+      }
+      .footer-link:hover {
+        color: #4caf50;
+      }
+      .h3_head {
+        margin-top: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Welcome to Home Decor Backend Server</h1>
+    <p>Your reliable API for home decor-related data.</p>
+    <a href="/graphql" class="button">Access GraphQL API</a>
+
+    <hr style="margin: 40px 0" />
+
+    <h3 class="h3">Project Link:</h3>
+    <a
+      href="https://github.com/shehroz-sheri/home-decor-backend-server"
+      target="_blank"
+      class="project-link"
+      >View Code on GitHub</a
+    >
+
+    <h3 class="h3_head">Technologies Used:</h3>
+    <p class="tech-stack">
+      Made with <strong>Node.js</strong>, <strong>Yoga-GraphQL</strong>,
+      <strong>Prisma</strong>, <strong>Type-GraphQL</strong>,
+      <strong>TypeScript</strong>, <strong>Express.js</strong>,
+      <strong>Neon PostgreSQL</strong>.
+    </p>
+
+    <h3 class="h3_head">Testing Queries and Mutations:</h3>
+    <p class="tech-stack">
+      To get mutations and queries for testing purposes, check out the
+      <a
+        href="https://github.com/shehroz-sheri/home-decor-backend-server/tree/main#readme"
+        target="_blank"
+        class="tech-link"
+        >README</a
+      >
+      and go to <strong>/graphql</strong> to test those queries and mutations.
+    </p>
+
+    <hr style="margin: 40px 0" />
+
+    <footer>
+      Copyright © 2024 Shehroz Arshad. All Rights Reserved.
+      <p class="footer-link-container">
+        <a
+          href="https://github.com/shehroz-sheri"
+          target="_blank"
+          class="footer-link"
+          >GitHub</a
+        ><br />
+        <a
+          href="https://linkedin.com/in/shehroz-arshad"
+          target="_blank"
+          class="footer-link"
+          >LinkedIn</a
+        >
+      </p>
+    </footer>
+  </body>
+</html>
