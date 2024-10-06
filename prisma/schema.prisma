@@ -1,0 +1,129 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator typegraphql {
+  provider = "typegraphql-prisma"
+  output   = "../src/generated/typegraphql"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                Int                @id @default(autoincrement())
+  name              String
+  email             String             @unique
+  password          String
+  phone             String?
+  address           String?
+  orders            Order[]            @relation("UserOrders")
+  cart              Cart[]             @relation("UserCart")
+  favourites        Furniture[]        @relation("UserFavourites")
+  reviews           Review[]           @relation("UserReviews")
+  verificationToken VerificationToken? @relation("UserVerificationToken")
+  isVerified        Boolean            @default(false)
+  otp               String?
+  otpExpiresAt      DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VerificationToken {
+  id        Int      @id @default(autoincrement())
+  token     String
+  expiresAt DateTime
+  user      User     @relation("UserVerificationToken", fields: [userId], references: [id])
+  userId    Int      @unique
+}
+
+model Furniture {
+  id           Int         @id @default(autoincrement())
+  title        String
+  description  String
+  price        Float
+  category     Category    @relation(fields: [categoryId], references: [id])
+  categoryId   Int
+  reviews      Review[]    @relation("FurnitureReviews")
+  cartItems    CartItem[]  @relation("FurnitureCartItems")
+  orderItems   OrderItem[] @relation("FurnitureOrderItems")
+  favouritedBy User[]      @relation("UserFavourites")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model Category {
+  id         Int         @id @default(autoincrement())
+  name       String      @unique
+  furnitures Furniture[]
+}
+
+model Order {
+  id         Int         @id @default(autoincrement())
+  user       User        @relation("UserOrders", fields: [userId], references: [id], onDelete: Cascade)
+  userId     Int
+  items      OrderItem[] @relation("OrderItems")
+  totalPrice Float
+  status     OrderStatus @default(PENDING)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Cart {
+  id     Int        @id @default(autoincrement())
+  user   User       @relation("UserCart", fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+  items  CartItem[] @relation("CartItems")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model Review {
+  id          Int       @id @default(autoincrement())
+  content     String
+  rating      Int
+  furniture   Furniture @relation("FurnitureReviews", fields: [furnitureId], references: [id])
+  furnitureId Int
+  user        User      @relation("UserReviews", fields: [userId], references: [id], onDelete: Cascade)
+  userId      Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model CartItem {
+  id          Int       @id @default(autoincrement())
+  cart        Cart      @relation("CartItems", fields: [cartId], references: [id])
+  cartId      Int
+  furniture   Furniture @relation("FurnitureCartItems", fields: [furnitureId], references: [id])
+  furnitureId Int
+  quantity    Int       @default(1)
+
+  createdAt DateTime @default(now())
+}
+
+model OrderItem {
+  id          Int       @id @default(autoincrement())
+  order       Order     @relation("OrderItems", fields: [orderId], references: [id])
+  orderId     Int
+  furniture   Furniture @relation("FurnitureOrderItems", fields: [furnitureId], references: [id])
+  furnitureId Int
+  price       Float
+  quantity    Int       @default(1)
+
+  createdAt DateTime @default(now())
+}
+
+enum OrderStatus {
+  PENDING
+  IN_PROGRESS
+  DELIVERED
+  CANCELLED
+  RETURNED
+}
