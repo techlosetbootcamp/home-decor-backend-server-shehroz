@@ -130,19 +130,6 @@ To test the GraphQL API, follow these steps:
     }
 
 
-#### Check if the user exists
-
-    query {
-      getUser(email: "john.doe@example.com") {
-        id
-        name
-        email
-        phone
-        address
-        isVerified
-      }
-    }
-
 #### Update user profile
 
     mutation {
