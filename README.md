@@ -85,14 +85,10 @@ To test the GraphQL API, follow these steps:
         name: "John Doe"
         email: "john.doe@example.com"
         password: "securepassword"
-        phone: "1234567890" (optional field)
-        address: "123 Main St, Anytown, USA" (optional field)
       }) {
         id
         name
         email
-        phone
-        address
         isVerified
       }
     }
