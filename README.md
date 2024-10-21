@@ -96,9 +96,7 @@ To test the GraphQL API, follow these steps:
 #### Login an existing user
 
     mutation {
-      login(email: "john.doe@example.com", password: "securepassword") {
-        token
-      }
+      login(email: "john.doe@example.com", password: "securepassword")
     }
 
 #### Resend OTP
@@ -120,9 +118,7 @@ To test the GraphQL API, follow these steps:
 #### Verify user with OTP (after receiving OTP via email)
 
     mutation {
-      login(email: "john.doe@example.com", password: "securepassword", otp: "123456") {
-        token
-      }
+      login(email: "john.doe@example.com", password: "securepassword", otp: "123456")
     }
 
 
@@ -134,7 +130,8 @@ To test the GraphQL API, follow these steps:
         phone: "9876543210"
         address: "456 New St, Anytown, USA"
         password: "newpassword123"
-      }) {
+      },
+        oldPassword: "securepassword") {
         id
         name
         email
@@ -381,7 +378,7 @@ This mutation will delete the specified review and return the ID of the deleted 
           quantity
           furniture {
             id
-            name
+            title
             price
           }
         }
@@ -399,7 +396,7 @@ Replace "1" with the actual user ID to fetch the user's cart details.
         quantity
         furniture {
           id
-          name
+          title
           price
         }
       }
@@ -415,23 +412,19 @@ This mutation will add a new item to the specified user's cart and return the ad
         quantity
         furniture {
           id
-          name
+          title
         }
       }
     }
 This mutation will update the quantity of the specified cart item and return the updated item details.
 #### Remove an item from the cart
     mutation {
-      removeItemFromCart(cartItemId: 1) {
-        # This mutation returns a boolean value indicating success
-      }
+      removeItemFromCart(cartItemId: 1)
     }
 This mutation will remove the specified item from the cart.
 #### Clear the cart for a user
     mutation {
-      clearCart(userId: 1) {
-        # This mutation returns a boolean value indicating success
-      }
+      clearCart(userId: 1)
     }
 This mutation will clear all items from the user's cart.
 
@@ -481,7 +474,7 @@ This mutation will create a new order for the specified user and return the deta
     mutation {
       updateOrderStatus(
         orderId: 1,                             # Replace with the actual order ID
-        status: "SHIPPED"                       # Replace with the desired status (e.g., "PENDING", "COMPLETED", "CANCELLED", etc.)
+        status: DELIVERED                       # Replace with the desired status (e.g., "PENDING", "COMPLETED", "CANCELLED", etc.)
       ) {
         id
         status
