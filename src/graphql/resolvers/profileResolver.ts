@@ -12,7 +12,8 @@ export class ProfileResolver {
   @UseMiddleware(isAuthenticated)
   async updateProfile(
     @Arg("email") email: string,
-    @Arg("userData") userData: UpdateUserInput
+    @Arg("userData") userData: UpdateUserInput,
+    @Arg("oldPassword", { nullable: true }) oldPassword?: string
   ): Promise<User> {
     const user = await prisma.user.findUnique({ where: { email } });
 
@@ -24,14 +25,23 @@ export class ProfileResolver {
     let hashedPassword: string | undefined;
 
     if (userData?.password) {
-      const validPassword = await bcrypt.compare(
-        userData?.password,
+      if (!oldPassword) {
+        throw new GraphQLError(
+          "Old password is required to change the password.",
+          {
+            extensions: { code: "OLD_PASSWORD_REQUIRED" },
+          }
+        );
+      }
+
+      const validOldPassword = await bcrypt.compare(
+        oldPassword,
         user?.password
       );
 
-      if (!validPassword) {
-        throw new GraphQLError("Error! Password does not match!", {
-          extensions: { code: "INVALID_PASSWORD" },
+      if (!validOldPassword) {
+        throw new GraphQLError("Old password is incorrect!", {
+          extensions: { code: "INVALID_OLD_PASSWORD" },
         });
       }
 
